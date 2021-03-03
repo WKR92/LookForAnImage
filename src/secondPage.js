@@ -69,13 +69,12 @@ export default class SecondPage extends React.Component{
       :this.state.resizeImages.concat(this.state.images)}))
       .then(gettags => gettags = this.state.images.map(elem => elem[8].length > 1 ? elem[8][1] : null).filter(elem => elem !== null)
       .map(elem => elem.title).filter(e => e !== this.props.mainInput).filter(e => e.length <= 16))
-      .then( data => this.setState({tags: [...new Set(data)]}))
+      .then(data => this.setState({tags: [...new Set(data)]}))
       .catch(err => console.log(err))
 
       // to hide no hints alert and tags
       this.clearInput()
       this.setState({tags: []})
-      
     }
     scrollUpdate(){
       if(this.state.showParticularPic === true || this.state.images === "empty"){
@@ -111,7 +110,6 @@ export default class SecondPage extends React.Component{
     componentDidMount(){
   
       this.fetchAPI(1)
-      // console.log(this.state.images)
   
       // scroll function
       window.addEventListener('scroll', this.scrollUpdate)
@@ -122,7 +120,7 @@ export default class SecondPage extends React.Component{
       let value = '';
 
       inp.addEventListener('keydown', (e) => {
-        eventSource = e.key ? '' : 'list';
+        eventSource = e.key ? 'input' : 'list';
       });
       inp.addEventListener('input', (e) => {
         value = e.target.value;
@@ -158,13 +156,12 @@ export default class SecondPage extends React.Component{
         leftImages: [],
         midImages: [],
         rightImages: [],
-        resizeImages: []
+        resizeImages: [],
       })
       this.fetchAPI(1)
   
-      const upperCaseInputFirstChar = this.props.mainInput.charAt(0).toUpperCase() + this.props.mainInput.slice(1);
       this.setState({
-        query: upperCaseInputFirstChar
+        query: this.props.mainInput.charAt(0).toUpperCase() + this.props.mainInput.slice(1)
       })
     }
     clearInput(){ 
@@ -172,7 +169,6 @@ export default class SecondPage extends React.Component{
       if(inp.value === ""){
         return;
       }
-      this.props.setMainInput("")
       inp.value = ""
       this.setState({hints: []})
     }
@@ -288,10 +284,6 @@ export default class SecondPage extends React.Component{
         lA.style["visibility"] = "hidden";
         }
     }
-    handleTagArrows(){
-      const rA = document.getElementById("rightArrowHolder")
-      console.log(rA.getBoundingClientRect().bottom)
-    }
     componentDidUpdate(){
       if(this.state.tags.length > 1){
         
@@ -404,7 +396,7 @@ export default class SecondPage extends React.Component{
               })}
           </div>
         </div>
-        {this.state.images === "empty" && this.state.leftImages.length > 1 ? <p id="noMoreImgs">No more photos to display for '{this.props.mainInput}' query.</p> : null}
+        {this.state.images === "empty" && this.state.leftImages.length > 1 ? <p id="noMoreImgs">No more photos to display for '{this.state.query}' query.</p> : null}
         {this.state.showParticularPic ? <OpenedImage id={this.state.imgId} rawImg={this.state.rawImg} openImage={this.openImage}
         name={this.state.name} username={this.state.username} location={this.state.location} profileImg={this.state.profileImg} 
         picOrientation={this.state.picOrientation}/> : null}
