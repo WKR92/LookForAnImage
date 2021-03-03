@@ -1,0 +1,741 @@
+#resizeImagesDiv{
+    display: none;
+}
+#noMoreImgs{
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.firstPageMainDiv{
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: inline-block;
+
+    .backGroundImg{
+        height: 100vh;
+        width: 100vw;
+        z-index: -1;
+        margin-bottom: -5px;
+    }
+    
+    .contentDiv{
+        position: absolute;
+        z-index: 1;
+        margin: 0 auto;
+        left: 30%;
+        top: 30%;
+        font-family: Arial,sans-serif;
+        color: #fff;
+        width: 35%;
+
+        // .contentDiv__h1{
+
+        // }
+
+        // .contentDiv__firstSubtitle{
+
+        // }
+
+        // .contentDiv__secoondSubtitle{
+
+        // }
+
+        .contentDiv__form{
+            display: flex;
+            align-items: center;
+            height: 40px;
+
+
+            .contentDiv__form__lupeBtn{
+                height: 100%;
+                background-color: white;
+                outline: none;
+                border: none;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                .lupeIcon{
+                    width: 14px;
+                    height: 14px;
+                    padding-left: 5px;
+                    &:hover{
+                        width: 13px;
+                        height: 13px;
+                    }
+                }
+            }
+
+            input[type="search"]::-webkit-search-cancel-button {
+                -webkit-appearance: none;
+                display: none;
+              }
+
+            input::-webkit-calendar-picker-indicator {
+                visibility: hidden;
+            }
+
+            .contentDiv__form__input{
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                outline: none;
+                border: none;
+                font-size: 16px;
+                padding-left: 10px;
+            }
+
+            .contentDiv__form__clearBtn{
+                height: 100%;
+                background-color: white;
+                outline: none;
+                border: none;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                .crossIcon{
+                    width: 11px;
+                    height: 11px;
+                    padding-right: 5px;
+                    &:hover{
+                        width: 10px;
+                        height: 10px;
+                    }
+                }
+            }
+        }
+
+        // .contentDiv__trending{
+            
+        // }
+    }
+}
+
+.secondPageMainDiv{
+    width: 70vw;
+    margin: auto;
+    position: relative;
+
+    .arrowBack{
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        height: 30px;
+        width: 30px;
+        padding-top: 4px;
+        cursor: pointer;
+    }
+
+    .secondPage__form{
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 35px;
+        
+
+        .secondPage__form__lupeBtn{
+            border: none;
+            outline: none;
+            background-color: rgb(228, 228, 228);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            height: 100%;
+
+            .lupeIcon{
+                height: 12px;
+                width: 12px;
+                padding-left: 10px;
+                &:hover{
+                    height: 11.5px;
+                    width: 11.5px;
+                }
+            }
+        }
+
+        input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+            display: none;
+          }
+
+        input::-webkit-calendar-picker-indicator {
+            visibility: hidden;
+        }
+
+        .secondPage__form__search{
+            margin-left: 0px;
+            background-color: rgb(228, 228, 228);
+            outline: none;
+            border: transparent;
+            height: 100%;
+            font-size: 15px;
+            width: 50%;
+            padding-left: 5px;
+
+        }
+
+        .secondPage__form__clearBtn{
+            align-items: center;
+            border: none;
+            outline: none;
+            background-color: rgb(228, 228, 228);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            height: 100%;
+
+            .crossIcon{
+                height: 10px;
+                width: 10px;
+                padding-right: 10px;
+                &:hover{
+                    height: 8.5px;
+                    width: 8.5px;
+                }
+            }
+        }
+    }
+
+    .alertDiv{
+        width: 55%;
+        margin: auto;
+
+        .alertP{
+            color: red;
+            display: flex;
+            align-items: center;
+            width: 300px;
+        }
+    }
+    
+
+    .secondPage__h1{
+        font-size: 40px;
+    }
+
+    .mainTagsDiv{
+        position: relative;
+
+        .leftArrowHolder{
+            position: absolute;
+            height: 42px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            visibility: hidden;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.6);
+
+            .leftArrow{
+                border: solid black;
+                border-width: 3px 0px 0px 3px;
+                display: inline-block;
+                padding: 3px;
+                transform: rotate(-45deg);
+                -webkit-transform: rotate(-45deg);
+                transition: fill .1s ease-in-out;
+                width: 5px;
+                height: 5px;
+                margin-left: 15px;
+                cursor: pointer;
+                opacity: 0.3;
+
+                &:hover{
+                    opacity: 1;
+                }
+            }
+        }
+
+        .rightArrowHolder{
+            position: absolute;
+            height: 42px;
+            width: 40px;
+            display: flex;
+            visibility: hidden;
+            align-items: center;
+            backface-visibility: hidden;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.6);
+            right: 0;
+            
+
+            .rightArrow{
+                border: solid black;
+                border-width: 3px 0px 0px 3px;
+                display: inline-block;
+                padding: 3px;
+                transform: rotate(135deg);
+                -webkit-transform: rotate(135deg);
+                transition: fill .1s ease-in-out;
+                width: 5px;
+                height: 5px;
+                margin-left: 15px;
+                cursor: pointer;
+                opacity: 0.3;
+
+                 &:hover{
+                    opacity: 1;
+                }
+            }
+        }
+
+        .innerTagsDiv{
+            display: inline-block;
+            margin-bottom: 30px;
+            margin-left: 0px;
+            position: relative;
+            scroll-behavior: smooth;
+            white-space: nowrap;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            width: 100%;
+    
+            .tagHolder{
+                border: 1px solid black;
+                opacity: 0.3;
+                display: inline-block;
+                width: 150px;
+                max-width: 100%;
+                height: 40px;
+                border-radius: 4px;
+                color: black;
+                margin-right: 5px;
+                margin-left: 5px;
+                text-align: center;
+                cursor: pointer;
+               
+                &:hover{
+                    opacity: 1;
+                }
+    
+                .tagP{
+                    margin-top: 9px;
+                }
+            }
+        }
+    }
+
+    .secondPage__imagesContainer{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .resizeImagesDiv{
+            margin: auto;
+
+            .resizeImageHolder{
+                width: 100%;
+                margin-bottom: 4.5%;
+                position: relative;
+
+                .resize__onImg__innerInfoDiv{
+                    position: absolute;
+                    display: none;
+                    align-items: center;
+                    bottom: 0;
+                    padding: 10px;
+
+                    .resize__onImg__profile_photo{
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 50%;
+                        margin-left: 5px;
+                        margin-right: 10px;            
+                    }
+
+                    .resize__onImg__userInfoDiv{ 
+
+                        .resize__onImg__nameP{
+                            color: white;
+                        }
+                    }
+                }
+
+                .resizeImg{
+                    width: 100%;
+                    &:hover{
+                        cursor: pointer;
+                        filter: brightness(80%);
+                    }
+                }
+            }
+        }
+
+        .leftImagesDiv{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 32%;
+
+            .leftImageHolder{
+                width: 100%;
+                margin-bottom: 4.5%;
+                position: relative;
+
+                .onImg__innerInfoDiv{
+                    position: absolute;
+                    display: none;
+                    align-items: center;
+                    bottom: 0;
+                    padding: 10px;
+
+                    .onImg__profile_photo{
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 50%;
+                        margin-left: 5px;
+                        margin-right: 10px;            
+                    }
+
+                    .onImg__userInfoDiv{ 
+
+                        .onImg__nameP{
+                            color: white;
+                        }
+                    }
+                }
+
+                .leftImg{
+                    width: 100%;
+                    &:hover{
+                        cursor: pointer;
+                        filter: brightness(80%);
+                    }
+                }
+
+            }
+        }
+
+        .midImagesDiv{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 32%;
+
+            .midImageHolder{
+                width: 100%;
+                margin-bottom: 4.5%;
+                position: relative;
+
+                .onImg__innerInfoDiv{
+                    position: absolute;
+                    display: none;
+                    align-items: center;
+                    bottom: 0;
+                    padding: 10px;
+
+                    .onImg__profile_photo{
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 50%;
+                        margin-left: 5px;
+                        margin-right: 10px;            
+                    }
+
+                    .onImg__userInfoDiv{ 
+
+                        .onImg__nameP{
+                            color: white;
+                        }
+                    }
+                }
+
+                .midImg{
+                    width: 100%;
+                    &:hover{
+                        cursor: pointer;
+                        filter: brightness(80%);
+                    }
+                }
+
+            }
+        }
+
+        .rightImagesDiv{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 32%;
+    
+
+            .rightImageHolder{
+                width: 100%;
+                margin-bottom: 4.5%;
+                position: relative;
+
+                .onImg__innerInfoDiv{
+                    position: absolute;
+                    display: none;
+                    align-items: center;
+                    bottom: 0;
+                    padding: 10px;
+
+                    .onImg__profile_photo{
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 50%;
+                        margin-left: 5px;
+                        margin-right: 10px;            
+                    }
+
+                    .onImg__userInfoDiv{ 
+
+                        .onImg__nameP{
+                            color: white;
+                        }
+                    }
+                }
+
+                .rightImg{
+                    width: 100%;
+                    &:hover{
+                        cursor: pointer;
+                        filter: brightness(60%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.openedImageMainDiv{
+    position:fixed;
+    height: 100%;
+    width: 100vw;
+    top: 0px;
+    left: 0px;
+    border: none;
+    background-color: rgba(0, 0, 0, .6);
+
+
+    .modalCancelBtn{
+        height: 15px;
+        width: 15px;
+        padding-top: 15px;
+        padding-left: 15px;
+        cursor: pointer;
+    }
+
+    .outerPicHolder{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .innerPicHolder{
+            top: 5%;
+            left: 9.5%;
+            width: 80vw;
+            background-color: white;
+            z-index: 1;
+            border: 0.1px solid black;
+            
+            .mainInfoDiv{
+                display: flex;
+                align-items: center;
+                height: 80px;
+
+                .innerInfoDiv{
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+
+                    .profile_photo{
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        padding: 15px;
+                    }
+
+                    .userInfoDiv{
+                        display: flex;
+                        flex-direction: column;
+                        
+
+                        .nameP{
+                            margin-bottom: 2px;
+                            font-size: 16px
+                        }
+
+                        .usernameP{
+                            margin-top: 0px;
+                            font-size: 13px;
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+
+                .locationDiv{
+                    display: flex;
+                    margin-left: auto;
+                    align-items: center;
+
+                    .locationP{ 
+                        margin-right: 5px;
+                    }
+    
+                    .locationIcon{
+                        height: 20px;
+                        width: 20px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            .outerPicDiv{
+                height: 70vh;
+                display: flex;
+                align-items: center;
+                margin: auto;
+                margin-bottom: 20px;
+
+                .picDivHorizontal{
+                    max-height: 100%;
+                    max-width: 60%;
+                    margin: auto;
+                    display: flex;
+
+                    .picHorizontal{
+                        max-width: 100%;
+                    }
+                }
+
+                .picDivVertical{
+                    max-height: 100%;
+                    max-width: 29%;
+                    margin: auto;
+                    display: flex;
+                    justify-content: center;
+                    
+
+                    .picVertical{
+                        max-width: 100%;
+                    }
+                }
+            }
+
+            .resize__locationDiv{
+                margin-left: auto;
+                align-items: center;
+                margin-left: 15px;
+                margin-top: -15px;
+                display: none;
+
+                // .resize__locationP{ 
+                    
+                // }
+
+                .resize__location_icon{
+                    height: 20px;
+                    width: 20px;
+                    margin-right: 5px;
+                }
+            }
+        
+        }
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    #innerPicHolder{
+        width: 90vw;
+    }
+    #picDivVertical{
+        max-width: 33%;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    #contentDiv{
+        left: 25%;
+        width: 50%;
+    }
+    #picDivHorizontal{
+        max-width: 70%;
+    }
+    #picDivVertical{
+        max-width: 35%;
+    }
+    #picDivVertical{
+        max-width: 41%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    #secondPageMainDiv{
+        width: 90vw;
+    }
+    #contentDiv{
+        left: 15%;
+        width: 70%;
+    }
+    #resizeImagesDiv{
+        display: block;
+    }
+    #leftImagesDiv{
+        display: none;
+    }
+    #midImagesDiv{
+        display: none;
+    }
+    #rightImagesDiv{
+        display: none;
+    }
+    #innerPicHolder{
+        width: 85vw;
+    }
+    #picVertical{
+        max-width: 80%;
+    }
+    #picDivHorizontal{
+        max-width: 100%;
+    }
+    #picDivVertical{
+        max-width: 64%;
+    }
+    #resize__locationDiv{
+        display: flex;
+    }
+    #locationDiv{
+        display: none;
+    }
+    #mainTagsDiv{
+        display: none;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    #picDivVertical{
+        max-width: 85%;
+    }
+}
+@media only screen and (max-width: 700px) {
+    #picDivVertical{
+        max-width: 95%;
+    }
+}
+@media only screen and (max-width: 600px) {
+    #picDivVertical{
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 450px){
+    #arrowBack{
+        padding-top: 5px;
+        height: 25px;
+        width: 25px;
+    }
+}
