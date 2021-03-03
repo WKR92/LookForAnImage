@@ -172,7 +172,6 @@ export default class SecondPage extends React.Component{
       if(inp.value === ""){
         return;
       }
-      this.props.setMainInput("")
       inp.value = ""
       this.setState({hints: []})
     }
