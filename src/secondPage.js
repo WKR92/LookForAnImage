@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import OpenedImage from './openedImage';
 import lupe from './icons/loupe.png';
 import cross from "./icons/letter-x.png";
 import arrow from './icons/arrow.png'
+import useDidMount from '@rooks/use-did-mount';
+import { resolvePlugin } from '@babel/core';
 
-const tomTomApiKey = "MmTYW8cbCvlP0Ldmo9cUDGwEyyqEUq0G"
 const APIAccessKey = "6PMB_sssC924TiZ3jPaY4Iwo4KZ0E6d6xZ0dgSbK4_g";
 
 export default class SecondPage extends React.Component{
@@ -28,7 +29,6 @@ export default class SecondPage extends React.Component{
         scrollnum: 1,
         imgsFromScroll: [],
         resizeImages: [],
-        hints: [],
         tags: []
       }
       this.handleChange = this.handleChange.bind(this);
@@ -41,13 +41,22 @@ export default class SecondPage extends React.Component{
       this.preparePicToOpen = this.preparePicToOpen.bind(this);
       this.showOnImageInfo = this.showOnImageInfo.bind(this);
       this.hideOnPicImageInfo = this.hideOnPicImageInfo.bind(this);
-      this.fetchApiHints = this.fetchApiHints.bind(this);
       this.handleArrow = this.handleArrow.bind(this);
       this.handleTag = this.handleTag.bind(this);
       this.scrollRigth = this.scrollRigth.bind(this);
       this.scrollLeft = this.scrollLeft.bind(this);
+      this.clearLists = this.clearLists.bind(this);
     }
-    fetchAPI(page, inpValue){
+    clearLists(){
+      this.setState({
+        images: [],
+        leftImages: [],
+        midImages: [],
+        rightImages: [],
+        resizeImages: []
+      })
+    }
+    fetchAPI(page){
   
       fetch("https://api.unsplash.com/search/photos/?"
       + "&client_id=" + APIAccessKey
@@ -108,6 +117,8 @@ export default class SecondPage extends React.Component{
       resizeUserInfoDiv.style["display"] = "none";
     }
     componentDidMount(){
+
+      this.props.setHints([])
   
       this.fetchAPI(1)
   
@@ -125,13 +136,7 @@ export default class SecondPage extends React.Component{
       inp.addEventListener('input', (e) => {
         value = e.target.value;
         if (eventSource === 'list') {
-          this.setState({
-            images: [],
-            leftImages: [],
-            midImages: [],
-            rightImages: [],
-            resizeImages: []
-          })
+          this.clearLists();
           this.props.setMainInput(value)
           this.setState({query: value})
           this.fetchAPI(1)
@@ -143,21 +148,15 @@ export default class SecondPage extends React.Component{
       await this.props.setMainInput(event.target.value.toLowerCase())
 
       if(event.target.value.length > 2){
-        this.fetchApiHints()        
+        this.props.fetchAPIHints()        
       } else {
-        this.setState({hints: []})
+        this.props.setHints([])
       }
     }
     handleSubmit(event){
       event.preventDefault();
   
-      this.setState({
-        images: [],
-        leftImages: [],
-        midImages: [],
-        rightImages: [],
-        resizeImages: [],
-      })
+      this.clearLists();
       this.fetchAPI(1)
   
       this.setState({
@@ -170,7 +169,7 @@ export default class SecondPage extends React.Component{
         return;
       }
       inp.value = ""
-      this.setState({hints: []})
+      this.props.setHints([])
     }
     openImage(event){
       this.setState({
@@ -222,25 +221,6 @@ export default class SecondPage extends React.Component{
   
       this.openImage()
     }
-    fetchApiHints(){
-      const regex = new RegExp(`${this.props.mainInput}`)
-      fetch("https://api.tomtom.com/search/"
-        + "2"
-        + "/autocomplete/"
-        + this.props.mainInput
-        + "."
-        + "json"
-        + "?key=" + tomTomApiKey
-        + "&language=en-GB"
-        + "&limit=8")
-        .then(res => res.json())
-        .then((data, fetchedDesriptions) => fetchedDesriptions = data.results.map(elem => elem.segments[0].value.toLowerCase()))
-        .then((data, setData) => setData = [...new Set(data)])
-        .then((data, filteredData) => filteredData = data.filter(elem => elem.match(regex)))
-        // .then((data, clearedData) => clearedData = data.filter(elem => elem !== this.props.mainInput))
-        .then((data) => this.setState({hints: data.length < 1 ? ["No hints for choosen query"] : data}))
-        .catch(err => this.setState({hints: []}))
-    }
     handleArrow(){
       this.props.changePage()
     }
@@ -249,40 +229,53 @@ export default class SecondPage extends React.Component{
       const tag = event.target.id
       await this.props.setMainInput(tag)
       this.setState({query: tag.charAt(0).toUpperCase() + tag.slice(1) })
-      this.setState({
-        images: [],
-        leftImages: [],
-        midImages: [],
-        rightImages: [],
-        resizeImages: []
-      })
+      this.clearLists();
       this.fetchAPI(1);
     }
     scrollRigth(){
-      const innerTagsDiv = document.getElementById("innerTagsDiv")
-      innerTagsDiv.scrollBy(350, 0);
 
       const lA = document.getElementById("leftArrowHolder")
       lA.style["visibility"] = "visible";
 
-      const tagHolderslist = document.querySelectorAll(".tagHolder")
-      const rA = document.getElementById("rightArrowHolder")
-      if(tagHolderslist[tagHolderslist.length -1].getBoundingClientRect().right < rA.getBoundingClientRect().right){
-        rA.style["visibility"] = "hidden";
+      function firstToGo(callback){
+        const innerTagsDiv = document.getElementById("innerTagsDiv")
+        innerTagsDiv.scrollBy(350, 0);
       }
+
+      function secondToGO(){ setTimeout(() => {
+        const tagHolderslist = document.querySelectorAll(".tagHolder")
+        const rA = document.getElementById("rightArrowHolder")
+        if(tagHolderslist[tagHolderslist.length -1].getBoundingClientRect().right < rA.getBoundingClientRect().right){
+          rA.style["visibility"] = "hidden";
+          }
+        }, 350)
+      }
+
+      firstToGo();
+      secondToGO();
     }
     scrollLeft(){
-      const innerTagsDiv = document.getElementById("innerTagsDiv")
-      innerTagsDiv.scrollBy(-350, 0);
 
       const rA = document.getElementById("rightArrowHolder")
       rA.style["visibility"] = "visible";
 
-      const tagHolderslist = document.querySelectorAll(".tagHolder")
-      const lA = document.getElementById("leftArrowHolder")
-      if(tagHolderslist[0].getBoundingClientRect().left > lA.getBoundingClientRect().left){
-        lA.style["visibility"] = "hidden";
-        }
+      function firstToGo(callback){
+          const innerTagsDiv = document.getElementById("innerTagsDiv")
+          innerTagsDiv.scrollBy(-350, 0);
+      }
+
+      function secondToGO(){ setTimeout(() => {
+        const tagHolderslist = document.querySelectorAll(".tagHolder")
+        const lA = document.getElementById("leftArrowHolder")
+        if(tagHolderslist[0].getBoundingClientRect().left > lA.getBoundingClientRect().left){
+          lA.style["visibility"] = "hidden";
+          }
+        }, 350)
+      }
+
+      firstToGo();
+      secondToGO();
+
     }
     componentDidUpdate(){
       if(this.state.tags.length > 1){
@@ -303,14 +296,14 @@ export default class SecondPage extends React.Component{
           <button onClick={this.handleSubmit} title="Search for pictures" type="button" className="secondPage__form__lupeBtn" ><img className="lupeIcon" alt="lupe_icon" src={lupe} /></button>
           <input list="autocomplite" autoComplete="off" title="Search for pictures" required onChange={this.handleChange} placeholder="Search..." id="secondPage__form__search" className="secondPage__form__search" type="search" />
           <datalist id="autocomplite">
-              {this.state.hints.map(elem => {
+              {this.props.hints.map(elem => {
                 return <option key={elem} value={elem}>{elem}</option>
               })}
             </datalist>
           <button title="Clear form" type="button" onClick={this.clearInput} className="secondPage__form__clearBtn"><img className="crossIcon" alt="cross_icon" src={cross} /></button>
         </form>
         <div className="alertDiv">
-          <p className="alertP">{this.state.hints[0] === "No hints for choosen query" ? " -- " + this.state.hints[0] : null}</p>
+          <p className="alertP">{this.props.hints[0] === "No hints for choosen query" ? " -- " + this.props.hints[0] : null}</p>
         </div>
         <h1 className="secondPage__h1">{this.state.query}</h1>
 
