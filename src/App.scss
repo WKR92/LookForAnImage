@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 #resizeImagesDiv{
     display: none;
 }
@@ -42,13 +46,13 @@
 
         // }
 
-        .contentDiv__form{
+        .searchInput__form{
             display: flex;
             align-items: center;
             height: 40px;
 
 
-            .contentDiv__form__lupeBtn{
+            .searchInput__form__lupeBtn{
                 height: 100%;
                 background-color: white;
                 outline: none;
@@ -79,7 +83,7 @@
                 visibility: hidden;
             }
 
-            .contentDiv__form__input{
+            .searchInput__form__input{
                 width: 100%;
                 height: 100%;
                 background-color: white;
@@ -89,7 +93,7 @@
                 padding-left: 10px;
             }
 
-            .contentDiv__form__clearBtn{
+            .searchInput__form__clearBtn{
                 height: 100%;
                 background-color: white;
                 outline: none;
@@ -112,7 +116,7 @@
             }
         }
 
-        // .contentDiv__trending{
+        // .searchInput__trending{
             
         // }
     }
@@ -131,9 +135,39 @@
         width: 30px;
         padding-top: 4px;
         cursor: pointer;
+        z-index: 9999;
     }
 
-    .secondPage__form{
+    .arrowUpHolder{
+        position: sticky;
+        top: 2%;
+        float: right;
+        height: 40px;
+        width: 40px;
+        padding-top: 2px;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-left: -10px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.3);
+        z-index: 9999;
+        border: none;
+
+            &:hover{
+                background-color: white;
+            }
+
+        .arrowUp{
+            height: 30px;
+            width: 30px;
+        }
+    }
+
+    
+
+    .searchInput__form{
         margin-top: 10px;
         display: flex;
         align-items: center;
@@ -141,7 +175,7 @@
         height: 35px;
         
 
-        .secondPage__form__lupeBtn{
+        .searchInput__form__lupeBtn{
             border: none;
             outline: none;
             background-color: rgb(228, 228, 228);
@@ -172,7 +206,7 @@
             visibility: hidden;
         }
 
-        .secondPage__form__search{
+        .searchInput__form__input{
             margin-left: 0px;
             background-color: rgb(228, 228, 228);
             outline: none;
@@ -184,7 +218,7 @@
 
         }
 
-        .secondPage__form__clearBtn{
+        .searchInput__form__clearBtn{
             align-items: center;
             border: none;
             outline: none;
@@ -329,6 +363,7 @@
 
     .secondPage__imagesContainer{
         width: 100%;
+        min-height: 90vh;
         display: flex;
         justify-content: space-between;
 
@@ -347,7 +382,7 @@
                     bottom: 0;
                     padding: 10px;
 
-                    .resize__onImg__profile_photo{
+                    .onImg__profile_photo{
                         width: 35px;
                         height: 35px;
                         border-radius: 50%;
@@ -355,9 +390,9 @@
                         margin-right: 10px;            
                     }
 
-                    .resize__onImg__userInfoDiv{ 
+                    .onImg__userInfoDiv{ 
 
-                        .resize__onImg__nameP{
+                        .onImg__nameP{
                             color: white;
                         }
                     }
@@ -422,6 +457,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            position: relative;
             width: 32%;
 
             .midImageHolder{
@@ -518,6 +554,7 @@
     left: 0px;
     border: none;
     background-color: rgba(0, 0, 0, .6);
+    z-index: 9999;
 
 
     .modalCancelBtn{
@@ -598,29 +635,17 @@
                 display: flex;
                 align-items: center;
                 margin: auto;
-                margin-bottom: 20px;
+                margin-bottom: 40px;
 
-                .picDivHorizontal{
+                .picInnerDiv{
                     max-height: 100%;
-                    max-width: 60%;
-                    margin: auto;
-                    display: flex;
-
-                    .picHorizontal{
-                        max-width: 100%;
-                    }
-                }
-
-                .picDivVertical{
-                    max-height: 100%;
-                    max-width: 29%;
                     margin: auto;
                     display: flex;
                     justify-content: center;
-                    
 
-                    .picVertical{
+                    .pic{
                         max-width: 100%;
+                        object-fit: contain;
                     }
                 }
             }
@@ -651,24 +676,12 @@
     #innerPicHolder{
         width: 90vw;
     }
-    #picDivVertical{
-        max-width: 33%;
-    }
 }
 
 @media only screen and (max-width: 1200px) {
     #contentDiv{
         left: 25%;
         width: 50%;
-    }
-    #picDivHorizontal{
-        max-width: 70%;
-    }
-    #picDivVertical{
-        max-width: 35%;
-    }
-    #picDivVertical{
-        max-width: 41%;
     }
 }
 
@@ -698,12 +711,6 @@
     #picVertical{
         max-width: 80%;
     }
-    #picDivHorizontal{
-        max-width: 100%;
-    }
-    #picDivVertical{
-        max-width: 64%;
-    }
     #resize__locationDiv{
         display: flex;
     }
@@ -714,22 +721,6 @@
         display: none;
     }
     
-}
-
-@media only screen and (max-width: 800px) {
-    #picDivVertical{
-        max-width: 85%;
-    }
-}
-@media only screen and (max-width: 700px) {
-    #picDivVertical{
-        max-width: 95%;
-    }
-}
-@media only screen and (max-width: 600px) {
-    #picDivVertical{
-        max-width: 100%;
-    }
 }
 
 @media only screen and (max-width: 450px){

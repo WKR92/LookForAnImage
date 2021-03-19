@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 #resizeImagesDiv {
   display: none;
 }
@@ -33,13 +37,13 @@
   width: 35%;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form {
+.firstPageMainDiv .contentDiv .searchInput__form {
   display: flex;
   align-items: center;
   height: 40px;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form .contentDiv__form__lupeBtn {
+.firstPageMainDiv .contentDiv .searchInput__form .searchInput__form__lupeBtn {
   height: 100%;
   background-color: white;
   outline: none;
@@ -51,27 +55,27 @@
   cursor: pointer;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form .contentDiv__form__lupeBtn .lupeIcon {
+.firstPageMainDiv .contentDiv .searchInput__form .searchInput__form__lupeBtn .lupeIcon {
   width: 14px;
   height: 14px;
   padding-left: 5px;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form .contentDiv__form__lupeBtn .lupeIcon:hover {
+.firstPageMainDiv .contentDiv .searchInput__form .searchInput__form__lupeBtn .lupeIcon:hover {
   width: 13px;
   height: 13px;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form input[type="search"]::-webkit-search-cancel-button {
+.firstPageMainDiv .contentDiv .searchInput__form input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   display: none;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form input::-webkit-calendar-picker-indicator {
+.firstPageMainDiv .contentDiv .searchInput__form input::-webkit-calendar-picker-indicator {
   visibility: hidden;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form .contentDiv__form__input {
+.firstPageMainDiv .contentDiv .searchInput__form .searchInput__form__input {
   width: 100%;
   height: 100%;
   background-color: white;
@@ -81,7 +85,7 @@
   padding-left: 10px;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form .contentDiv__form__clearBtn {
+.firstPageMainDiv .contentDiv .searchInput__form .searchInput__form__clearBtn {
   height: 100%;
   background-color: white;
   outline: none;
@@ -93,13 +97,13 @@
   cursor: pointer;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form .contentDiv__form__clearBtn .crossIcon {
+.firstPageMainDiv .contentDiv .searchInput__form .searchInput__form__clearBtn .crossIcon {
   width: 11px;
   height: 11px;
   padding-right: 5px;
 }
 
-.firstPageMainDiv .contentDiv .contentDiv__form .contentDiv__form__clearBtn .crossIcon:hover {
+.firstPageMainDiv .contentDiv .searchInput__form .searchInput__form__clearBtn .crossIcon:hover {
   width: 10px;
   height: 10px;
 }
@@ -118,9 +122,37 @@
   width: 30px;
   padding-top: 4px;
   cursor: pointer;
+  z-index: 9999;
 }
 
-.secondPageMainDiv .secondPage__form {
+.secondPageMainDiv .arrowUpHolder {
+  position: sticky;
+  top: 2%;
+  float: right;
+  height: 40px;
+  width: 40px;
+  padding-top: 2px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-left: -10px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 9999;
+  border: none;
+}
+
+.secondPageMainDiv .arrowUpHolder:hover {
+  background-color: white;
+}
+
+.secondPageMainDiv .arrowUpHolder .arrowUp {
+  height: 30px;
+  width: 30px;
+}
+
+.secondPageMainDiv .searchInput__form {
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -128,7 +160,7 @@
   height: 35px;
 }
 
-.secondPageMainDiv .secondPage__form .secondPage__form__lupeBtn {
+.secondPageMainDiv .searchInput__form .searchInput__form__lupeBtn {
   border: none;
   outline: none;
   background-color: #e4e4e4;
@@ -140,27 +172,27 @@
   height: 100%;
 }
 
-.secondPageMainDiv .secondPage__form .secondPage__form__lupeBtn .lupeIcon {
+.secondPageMainDiv .searchInput__form .searchInput__form__lupeBtn .lupeIcon {
   height: 12px;
   width: 12px;
   padding-left: 10px;
 }
 
-.secondPageMainDiv .secondPage__form .secondPage__form__lupeBtn .lupeIcon:hover {
+.secondPageMainDiv .searchInput__form .searchInput__form__lupeBtn .lupeIcon:hover {
   height: 11.5px;
   width: 11.5px;
 }
 
-.secondPageMainDiv .secondPage__form input[type="search"]::-webkit-search-cancel-button {
+.secondPageMainDiv .searchInput__form input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   display: none;
 }
 
-.secondPageMainDiv .secondPage__form input::-webkit-calendar-picker-indicator {
+.secondPageMainDiv .searchInput__form input::-webkit-calendar-picker-indicator {
   visibility: hidden;
 }
 
-.secondPageMainDiv .secondPage__form .secondPage__form__search {
+.secondPageMainDiv .searchInput__form .searchInput__form__input {
   margin-left: 0px;
   background-color: #e4e4e4;
   outline: none;
@@ -171,7 +203,7 @@
   padding-left: 5px;
 }
 
-.secondPageMainDiv .secondPage__form .secondPage__form__clearBtn {
+.secondPageMainDiv .searchInput__form .searchInput__form__clearBtn {
   align-items: center;
   border: none;
   outline: none;
@@ -184,13 +216,13 @@
   height: 100%;
 }
 
-.secondPageMainDiv .secondPage__form .secondPage__form__clearBtn .crossIcon {
+.secondPageMainDiv .searchInput__form .searchInput__form__clearBtn .crossIcon {
   height: 10px;
   width: 10px;
   padding-right: 10px;
 }
 
-.secondPageMainDiv .secondPage__form .secondPage__form__clearBtn .crossIcon:hover {
+.secondPageMainDiv .searchInput__form .searchInput__form__clearBtn .crossIcon:hover {
   height: 8.5px;
   width: 8.5px;
 }
@@ -314,6 +346,7 @@
 
 .secondPageMainDiv .secondPage__imagesContainer {
   width: 100%;
+  min-height: 90vh;
   display: flex;
   justify-content: space-between;
 }
@@ -336,7 +369,7 @@
   padding: 10px;
 }
 
-.secondPageMainDiv .secondPage__imagesContainer .resizeImagesDiv .resizeImageHolder .resize__onImg__innerInfoDiv .resize__onImg__profile_photo {
+.secondPageMainDiv .secondPage__imagesContainer .resizeImagesDiv .resizeImageHolder .resize__onImg__innerInfoDiv .onImg__profile_photo {
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -344,7 +377,7 @@
   margin-right: 10px;
 }
 
-.secondPageMainDiv .secondPage__imagesContainer .resizeImagesDiv .resizeImageHolder .resize__onImg__innerInfoDiv .resize__onImg__userInfoDiv .resize__onImg__nameP {
+.secondPageMainDiv .secondPage__imagesContainer .resizeImagesDiv .resizeImageHolder .resize__onImg__innerInfoDiv .onImg__userInfoDiv .onImg__nameP {
   color: white;
 }
 
@@ -403,6 +436,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  position: relative;
   width: 32%;
 }
 
@@ -491,6 +525,7 @@
   left: 0px;
   border: none;
   background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
 }
 
 .openedImageMainDiv .modalCancelBtn {
@@ -572,30 +607,19 @@
   display: flex;
   align-items: center;
   margin: auto;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-.openedImageMainDiv .outerPicHolder .innerPicHolder .outerPicDiv .picDivHorizontal {
+.openedImageMainDiv .outerPicHolder .innerPicHolder .outerPicDiv .picInnerDiv {
   max-height: 100%;
-  max-width: 60%;
-  margin: auto;
-  display: flex;
-}
-
-.openedImageMainDiv .outerPicHolder .innerPicHolder .outerPicDiv .picDivHorizontal .picHorizontal {
-  max-width: 100%;
-}
-
-.openedImageMainDiv .outerPicHolder .innerPicHolder .outerPicDiv .picDivVertical {
-  max-height: 100%;
-  max-width: 29%;
   margin: auto;
   display: flex;
   justify-content: center;
 }
 
-.openedImageMainDiv .outerPicHolder .innerPicHolder .outerPicDiv .picDivVertical .picVertical {
+.openedImageMainDiv .outerPicHolder .innerPicHolder .outerPicDiv .picInnerDiv .pic {
   max-width: 100%;
+  object-fit: contain;
 }
 
 .openedImageMainDiv .outerPicHolder .innerPicHolder .resize__locationDiv {
@@ -616,24 +640,12 @@
   #innerPicHolder {
     width: 90vw;
   }
-  #picDivVertical {
-    max-width: 33%;
-  }
 }
 
 @media only screen and (max-width: 1200px) {
   #contentDiv {
     left: 25%;
     width: 50%;
-  }
-  #picDivHorizontal {
-    max-width: 70%;
-  }
-  #picDivVertical {
-    max-width: 35%;
-  }
-  #picDivVertical {
-    max-width: 41%;
   }
 }
 
@@ -663,12 +675,6 @@
   #picVertical {
     max-width: 80%;
   }
-  #picDivHorizontal {
-    max-width: 100%;
-  }
-  #picDivVertical {
-    max-width: 64%;
-  }
   #resize__locationDiv {
     display: flex;
   }
@@ -677,24 +683,6 @@
   }
   #mainTagsDiv {
     display: none;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  #picDivVertical {
-    max-width: 85%;
-  }
-}
-
-@media only screen and (max-width: 700px) {
-  #picDivVertical {
-    max-width: 95%;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  #picDivVertical {
-    max-width: 100%;
   }
 }
 
