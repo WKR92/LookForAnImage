@@ -1,4 +1,4 @@
-import backgroundImage from "./icons/john-towner-JgOeRuGD_Y4-unsplash.jpg";
+import bgImage from './icons/bgphoto.jpg'
 import React from "react";
 import { useHistory } from "react-router-dom";
 import SearchInput from './searchInput'
@@ -12,7 +12,7 @@ function FirstPage(props) {
   }
   return(
     <div className="firstPageMainDiv" id="firstPageMainDiv">
-      <img className="backGroundImg" alt="landscape" src={backgroundImage} />
+      <img className="backGroundImg" alt="landscape" src={bgImage} />
       <div className="contentDiv" id="contentDiv">
         <h1 className="contentDiv__h1">Look For An Image</h1>
         <p className="contentDiv__firstSubtitle">Usplash API powered pictures browser.</p>
