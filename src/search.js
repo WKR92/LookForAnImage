@@ -8,19 +8,17 @@ import ImagesBlock from './imagesBlock'
 import OpenedImage from './openedImage'
 
 const APIAccessKey = "6PMB_sssC924TiZ3jPaY4Iwo4KZ0E6d6xZ0dgSbK4_g";
-
 class SecondPage extends React.Component{
     constructor(props) {
       super(props);
       this.state = {
         showParticularPic: false,
         updatedKeyImgs: 0,
-        updatedKeytags: 1,
+        updatedKeyTags: 1,
         checkIfParticularPicIsOpen: false,
         checkIfFetchReturnsNothing: false,
         images: [],
-        query: props.mainInput !== "" ? props.mainInput 
-        : JSON.parse(localStorage.getItem('query')),
+        query: JSON.parse(localStorage.getItem('query')),
         scrollnum: 1,
         picToOpenData: "",
       }
@@ -84,10 +82,8 @@ class SecondPage extends React.Component{
       .then(data => this.setState({images: data.length > 0 ? this.state.images.concat(data) : this.state.images,
         checkIfFetchReturnsNothing: data.length > 0 ? false : true}))
       .catch(err => console.log(err))
-
-      this.setState({tags: []})
     }
-    async scrollUpdate(){
+    scrollUpdate(){
       if(this.state.checkIfParticularPicIsOpen === true || this.state.images.length < 1){
         return;
       }
@@ -138,7 +134,7 @@ class SecondPage extends React.Component{
       }
     }
     propsForDidMountInSearchInput(value){
-      this.setState({images: [],});
+      this.setState({images: []});
       this.setState({query: value});
       this.fetchAPI(1);
       this.refreshBlocksOfImagesAndTags();
@@ -152,11 +148,10 @@ class SecondPage extends React.Component{
     handleArrowBack(){
       this.props.history.push("/LookForAnImage");
     }
-    async handleTag(event){
+    handleTag(event){
       const tag = event.target.id;
-      // await this.props.setMainInput(tag);
       this.setState({query: tag});
-      this.setState({images: [],});
+      this.setState({images: []});
       this.props.setHints([]);
       localStorage.setItem('query', JSON.stringify(tag));
       this.fetchAPI(1);
@@ -166,7 +161,7 @@ class SecondPage extends React.Component{
       <div ref={this.scrollToTopRef} className="secondPageMainDiv" id="secondPageMainDiv">
         <img onClick={this.handleArrowBack} alt="left_arrow_icon" src={arrow} title="Go back" className="arrowBack" id="arrowBack" />
         <div onClick={this.scrolToTop} className="arrowUpHolder">
-          <img onClick={this.handleArrow} alt="up_arrow_icon" src={arrowUp} title="Go up" className="arrowUp" id="arrowUp" />
+          <img alt="up_arrow_icon" src={arrowUp} title="Go up" className="arrowUp" id="arrowUp" />
         </div>
 
         <SearchInput
