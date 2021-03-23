@@ -1,4 +1,5 @@
-import React from 'react';
+import React,  { useEffect, useState, useCallback, useRef } from 'react';
+import { useHistory } from "react-router-dom";
 import arrow from './icons/arrow.png'
 import arrowUp from './icons/up-arrow.png'
 import SearchInput from './searchInput'
@@ -8,212 +9,179 @@ import ImagesBlock from './imagesBlock'
 import OpenedImage from './openedImage'
 
 const APIAccessKey = "6PMB_sssC924TiZ3jPaY4Iwo4KZ0E6d6xZ0dgSbK4_g";
-class SecondPage extends React.Component{
-    constructor(props) {
-      super(props);
-      this.state = {
-        showParticularPic: false,
-        updatedKeyImgs: 0,
-        updatedKeyTags: 1,
-        checkIfParticularPicIsOpen: false,
-        checkIfFetchReturnsNothing: false,
-        images: [],
-        query: JSON.parse(localStorage.getItem('query')),
-        scrollnum: 1,
-        picToOpenData: "",
-      }
-      this.scrollToTopRef = React.createRef();
-      this.fetchAPI = this.fetchAPI.bind(this);
-      this.refreshBlocksOfImagesAndTags = this.refreshBlocksOfImagesAndTags.bind(this);
-      this.checkIfParticularPicIsOpen = this.checkIfParticularPicIsOpen.bind(this);
-      this.showArrowOnScroll = this.showArrowOnScroll.bind(this);
-      this.scrollUpdate = this.scrollUpdate.bind(this);
-      this.handleArrowBack = this.handleArrowBack.bind(this);
-      this.handleTag = this.handleTag.bind(this);
-      this.openImage = this.openImage.bind(this);
-      this.scrolToTop = this.scrolToTop.bind(this);
-      this.getDataOfParticularPic = this.getDataOfParticularPic.bind(this);
-      this.propsForDidMountInSearchInput = this.propsForDidMountInSearchInput.bind(this);
-      this.propsForHandleSubmitInSearchInput = this.propsForHandleSubmitInSearchInput.bind(this);
-    }
-    scrolToTop(){
-      this.scrollToTopRef.current.scrollIntoView();
-    }
-    openImage(){
-      this.setState({showParticularPic: !this.state.showParticularPic});
-      this.setState({checkIfParticularPicIsOpen: !this.state.checkIfParticularPicIsOpen})
-    }
-    getDataOfParticularPic(event){
-      const id = event.target.id
-      const pic = this.state.images.filter(elem => elem.includes(id))     
-      this.setState({picToOpenData: pic})
-      this.openImage();
-    }
-    checkIfParticularPicIsOpen(){
-      this.setState({
-        checkIfParticularPicIsOpen: !this.state.checkIfParticularPicIsOpen
-      });
-    }
-    refreshBlocksOfImagesAndTags(){
-      this.setState({
-        updatedKeyImgs: this.state.updatedKeyImgs -1,
-        updatedKeyTags: this.state.updatedKeyTags +1
-      })
-    }
-    fetchAPI(page){
-  
-      fetch("https://api.unsplash.com/search/photos/?"
-      + "&client_id=" + APIAccessKey
-      + "&query=" + JSON.parse(localStorage.getItem('query'))
-      + "&per_page=30"
-      + "&page=" + page
-      )
-      .then(response => response.json())
-      .then((data, fetchedUrls) => fetchedUrls = data.results.map(elem => 
-      [elem.urls.small, 
-      elem.urls.regular, 
-      elem.user.name,
-      elem.user.username, 
-      elem.user.location, 
-      elem.user.profile_image.medium,
-      elem.id,
-      elem.alt_description !== null ? elem.alt_description : "no description", 
-      elem.tags]))
-      .then(data => this.setState({images: data.length > 0 ? this.state.images.concat(data) : this.state.images,
-        checkIfFetchReturnsNothing: data.length > 0 ? false : true}))
-      .catch(err => console.log(err))
-    }
-    scrollUpdate(){
-      if(this.state.checkIfParticularPicIsOpen === true || this.state.images.length < 1){
-        return;
-      }
-      const lastDiv = document.querySelector(".secondPageMainDiv")
-      if(lastDiv.getBoundingClientRect().bottom -1 < window.innerHeight){
-        this.fetchAPI(this.state.scrollnum + 1);
-        this.setState({
-          scrollnum: this.state.scrollnum + 1
-        })
-        setTimeout(() => {
-          this.setState({
-            updatedKeyImgs: this.state.updatedKeyImgs -1,
-            updatedKeyTags: this.state.updatedKeyTags +1
-          })
-        }, 500)
-      }
-    }
-    showArrowOnScroll(){
-      const lastDiv = document.querySelector(".secondPage__imagesContainer")
-      const arrowUpHolder = document.querySelector(".arrowUpHolder")
-      if(lastDiv.getBoundingClientRect().top < 0){
-        arrowUpHolder.style["display"] = "flex"
-      }else{
-        arrowUpHolder.style["display"] = "none"
-      }
-    }
-    componentDidMount(){
-      window.onbeforeunload = () => {
-        localStorage.setItem('query', JSON.stringify(this.state.query));
-      }
-  
-      this.fetchAPI(1);
-  
-      // scroll functions
-      window.addEventListener('scroll', this.scrollUpdate);
-      window.addEventListener('scroll', this.showArrowOnScroll);
-    }
-    componentWillUnmount(){
-      // clear scroll functions
-      window.removeEventListener('scroll', this.scrollUpdate);
-      window.removeEventListener('scroll', this.showArrowOnScroll);
-    }
-    componentDidUpdate(){
-      if(this.state.checkIfFetchReturnsNothing === true){
-        window.removeEventListener('scroll', this.scrollUpdate);
-      } else{
-        window.addEventListener('scroll', this.scrollUpdate);
-      }
-    }
-    propsForDidMountInSearchInput(value){
-      this.setState({images: []});
-      this.setState({query: value});
-      this.fetchAPI(1);
-      this.refreshBlocksOfImagesAndTags();
-    }
-    propsForHandleSubmitInSearchInput(){
-      this.setState({images: []});
-      this.fetchAPI(1);
-      this.setState({query: this.props.mainInput});
-      this.refreshBlocksOfImagesAndTags();
-    }
-    handleArrowBack(){
-      this.props.history.push("/LookForAnImage");
-    }
-    handleTag(event){
-      const tag = event.target.id;
-      this.setState({query: tag});
-      this.setState({images: []});
-      this.props.setHints([]);
-      localStorage.setItem('query', JSON.stringify(tag));
-      this.fetchAPI(1);
-    }
-    render(){
-    return(
-      <div ref={this.scrollToTopRef} className="secondPageMainDiv" id="secondPageMainDiv">
-        <img onClick={this.handleArrowBack} alt="left_arrow_icon" src={arrow} title="Go back" className="arrowBack" id="arrowBack" />
-        <div onClick={this.scrolToTop} className="arrowUpHolder">
-          <img alt="up_arrow_icon" src={arrowUp} title="Go up" className="arrowUp" id="arrowUp" />
-        </div>
+const SecondPage = (props) => {
 
-        <SearchInput
-          hints={this.props.hints} mainInput={this.props.mainInput} 
-          setMainInput={this.props.setMainInput}
-          setHints={this.props.setHints} 
-          handleSubmitForConcretePage={this.propsForHandleSubmitInSearchInput}
-          didMountForConcretePage={this.propsForDidMountInSearchInput}
-        />
+  let scroll = 1
+  let isPicOpen = useRef(false)
+  let isFetchReturningNohing = useRef(false)
+  const scrollTopRef = useRef()
+  const history = useHistory();
+  const orient = ["left", "mid", "right", "resize"]
+  const [showParticularPic, setShowParticularPic] = useState(false);
+  const [updatedKeyImgs, setUpdatedKeyImgs] = useState(0);
+  const [updatedKeyTags, setUpdatedKeyTags] = useState(1);
+  const [images, setImages] = useState([]);
+  const [query, setQuery] = useState(JSON.parse(localStorage.getItem('query')));
+  const [picToOpenData, setPicToOpenData] = useState('');
 
-        <div className="alertDiv">
-          <p className="alertP">{this.props.hints[0] === "No hints for choosen query" ? " -- " + this.props.hints[0] : null}</p>
-        </div>
-        <h1 className="secondPage__h1">{this.state.query.charAt(0).toUpperCase() + this.state.query.slice(1)}</h1>
-
-        {this.state.images.length > 0
-        ? <Tags key={this.state.updatedKeyTags} handleTag={this.handleTag} images={this.state.images} mainInput={this.props.mainInput} />
-        : null}
-       
-        <div key={this.state.updatedKeyImgs} className="secondPage__imagesContainer" id="secondPage__imagesContainer">
-          {this.state.images.length < 1
-          ? <h2 style={{color: "red"}}>No results for the chosen queries. Please, try with another ones.</h2>
-          : null}
-
-          {this.state.images.length > 0
-          ? <ImagesBlock orientation="left" images={this.state.images} checkIfParticularPicIsOpen={this.checkIfParticularPicIsOpen}
-          getDataOfParticularPic={this.getDataOfParticularPic} />
-          : null}
-
-          {this.state.images.length > 0
-          ? <ImagesBlock orientation="mid" images={this.state.images} checkIfParticularPicIsOpen={this.checkIfParticularPicIsOpen}
-          getDataOfParticularPic={this.getDataOfParticularPic} />
-          : null}
-
-          {this.state.images.length > 0
-          ? <ImagesBlock orientation="right" images={this.state.images} checkIfParticularPicIsOpen={this.checkIfParticularPicIsOpen}
-          getDataOfParticularPic={this.getDataOfParticularPic} />
-          : null}
-
-          {this.state.images.length > 0
-          ? <ImagesBlock orientation="resize" images={this.state.images} checkIfParticularPicIsOpen={this.checkIfParticularPicIsOpen}
-          getDataOfParticularPic={this.getDataOfParticularPic} />
-          : null}
-          
-          {this.state.showParticularPic ? <OpenedImage picToOpenData={this.state.picToOpenData} 
-          openImage={this.openImage} /> : null}
-        </div>
-          {this.state.checkIfFetchReturnsNothing && this.state.images.length > 0
-          ? <p id="noMoreImgs">No more photos to display for '{this.state.query}' query.</p>
-          : null}
-      </div>
-    )}
+  function scrolToTop(){
+    scrollTopRef.current.scrollIntoView();
   }
 
-  export default withRouter(SecondPage)
+  function openImage(){
+    setShowParticularPic(!showParticularPic);
+    isPicOpen.current = !isPicOpen.current
+  }
+
+  function getDataOfParticularPic(event){
+    const id = event.target.id
+    const pic = images.filter(elem => elem.includes(id))     
+    setPicToOpenData(pic)
+    openImage();
+  }
+
+  const fetchAPI = useCallback((page) => {
+
+    fetch("https://api.unsplash.com/search/photos/?"
+    + "&client_id=" + APIAccessKey
+    + "&query=" + JSON.parse(localStorage.getItem('query'))
+    + "&per_page=30"
+    + "&page=" + page
+    )
+    .then(response => response.json())
+    .then((data, fetchedUrls) => fetchedUrls = data.results.map(elem => 
+    [elem.urls.small, 
+    elem.urls.regular, 
+    elem.user.name,
+    elem.user.username, 
+    elem.user.location, 
+    elem.user.profile_image.medium,
+    elem.id,
+    elem.alt_description !== null ? elem.alt_description : "no description", 
+    elem.tags]))
+    .then(data =>
+      data.length > 0 ? setImages(images => [...images.concat(data)]) : isFetchReturningNohing.current = true
+    )
+    .catch(err => console.log(err))
+  }, [])
+
+  const scrollUpdate = useCallback(() => {
+    if(isPicOpen.current || isFetchReturningNohing.current === true){
+      return;
+    } 
+    const lastDiv = document.querySelector(".secondPageMainDiv");
+    if(lastDiv.getBoundingClientRect().bottom -1 < window.innerHeight){ 
+      fetchAPI(scroll + 1);
+      scroll++
+      setTimeout(() => {
+        setUpdatedKeyImgs(scroll - 10);
+        setUpdatedKeyTags(scroll + 10);
+      }, 500)
+    }
+  }, [fetchAPI, scroll])
+
+
+  const showArrowOnScroll = useCallback(() => {
+    const lastDiv = document.querySelector(".secondPage__imagesContainer")
+    const arrowUpHolder = document.querySelector(".arrowUpHolder")
+    if(lastDiv.getBoundingClientRect().top < 0){
+      arrowUpHolder.style["display"] = "flex"
+    }else{
+      arrowUpHolder.style["display"] = "none"
+    }
+  }, [])
+
+  useEffect(() => {
+    setImages([]);
+
+    window.onbeforeunload = () => {
+      localStorage.setItem('query', JSON.stringify(query));
+    }
+
+    fetchAPI(1);
+
+    // scroll functions
+    window.addEventListener('scroll', scrollUpdate);
+    window.addEventListener('scroll', showArrowOnScroll);
+    return () => {
+      window.removeEventListener('scroll', scrollUpdate);
+      window.removeEventListener('scroll', showArrowOnScroll);
+    }
+  }, [fetchAPI, scrollUpdate, showArrowOnScroll, query])
+
+  function propsForDidMountInSearchInput(value){
+    if(JSON.parse(localStorage.getItem('query')) === query){
+      window.location.reload(false)
+    }
+    setImages([]);
+    setQuery(value);
+    isFetchReturningNohing.current = false
+  }
+
+  function propsForHandleSubmitInSearchInput(){
+    if(props.mainInput === query){
+      window.location.reload(false)
+    }
+    setImages([]);
+    setQuery(props.mainInput);
+    isFetchReturningNohing.current = false
+  }
+
+  function handleArrowBack(){
+    window.removeEventListener('scroll', showArrowOnScroll);
+    window.removeEventListener('scroll', scrollUpdate);
+    
+    history.push("/LookForAnImage");
+  }
+
+  function handleTag(event){
+    const tag = event.target.id;
+    setQuery(tag);
+    setImages([]);
+    props.setHints([]);
+    isFetchReturningNohing.current = false
+    localStorage.setItem('query', JSON.stringify(tag)); 
+  }
+
+  return(
+    <div ref={scrollTopRef} className="secondPageMainDiv" id="secondPageMainDiv">
+      <img onClick={handleArrowBack} alt="left_arrow_icon" src={arrow} title="Go back" className="arrowBack" id="arrowBack" />
+      <div onClick={scrolToTop} className="arrowUpHolder">
+        <img alt="up_arrow_icon" src={arrowUp} title="Go up" className="arrowUp" id="arrowUp" />
+      </div>
+
+      <SearchInput
+        hints={props.hints} mainInput={props.mainInput} 
+        setMainInput={props.setMainInput}
+        setHints={props.setHints} 
+        handleSubmitForConcretePage={propsForHandleSubmitInSearchInput}
+        didMountForConcretePage={propsForDidMountInSearchInput}
+      />
+
+      <div className="alertDiv">
+        <p className="alertP">{props.hints[0] === "No hints for choosen query" ? " -- " + props.hints[0] : null}</p>
+      </div>
+      <h1 className="secondPage__h1">{query.charAt(0).toUpperCase() + query.slice(1)}</h1>
+
+      {images.length > 0
+      ? <Tags key={updatedKeyTags} handleTag={handleTag} images={images} mainInput={props.mainInput} />
+      : null}
+     
+      <div key={updatedKeyImgs} className="secondPage__imagesContainer" id="secondPage__imagesContainer">
+        {images.length < 1
+        ? <h2 style={{color: "red"}}>No results for the chosen queries. Please, try with another ones.</h2>
+        : orient.map(e => {
+          return <ImagesBlock orientation={e} key={e} images={images} getDataOfParticularPic={getDataOfParticularPic} />
+        })}
+        
+        {showParticularPic ? <OpenedImage picToOpenData={picToOpenData} 
+        openImage={openImage} /> : null}
+      </div>
+        {isFetchReturningNohing.current === true && images.length > 0
+        ? <p id="noMoreImgs">No more photos to display for '{query}' query.</p>
+        : null}
+    </div>
+  )
+}
+
+export default withRouter(SecondPage)

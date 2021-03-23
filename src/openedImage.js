@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import locationIcon from './icons/pin.png';
 import cross from "./icons/letter-x.png";
 

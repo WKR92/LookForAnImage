@@ -20,8 +20,8 @@ export default function Tags(props){
         if(tags.length > 1){
             const rA = document.getElementById("rightArrowHolder")
             const tagHolderslist = document.querySelectorAll(".tagHolder")
-            if(tagHolderslist[tagHolderslist.length -1].getBoundingClientRect().right > rA.getBoundingClientRect().left &&
-            tagHolderslist[tagHolderslist.length -1].getBoundingClientRect().right > rA.getBoundingClientRect().right){
+            if(tagHolderslist[tagHolderslist.length -1].getBoundingClientRect().right > rA.getBoundingClientRect().left
+            && tagHolderslist[tagHolderslist.length -1].getBoundingClientRect().right > rA.getBoundingClientRect().right){
                 rA.style["visibility"] = "visible";
             }
         }
