@@ -8,12 +8,12 @@ function App() {
   const [mainInput, setMainInput] = useState("");
   const [hints, setHints] = useState([]);
   return (
-    <Router>
+    <Router basename="/">
     <div className="App">
       <Switch>
-        <Route name="home" path="/LookForAnImage" render={props => <FirstPage mainInput={mainInput} setMainInput={setMainInput}
-        hints={hints} setHints={setHints} />} />
         <Route name="secondPage" path="/search" render={props => <SecondPage setMainInput={setMainInput} mainInput={mainInput} 
+        hints={hints} setHints={setHints} />} />
+        <Route name="home" path="/" render={props => <FirstPage mainInput={mainInput} setMainInput={setMainInput}
         hints={hints} setHints={setHints} />} />
       </Switch>
     </div>
