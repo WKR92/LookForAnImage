@@ -61,7 +61,7 @@ const SearchInput = (props) => {
     + "&language=en-GB"
     + "&limit=10")
     .then(res => res.json())
-    .then((data, fetchedDesriptions) => fetchedDesriptions = data.results.map(elem => elem.segments[0].value.toLowerCase()))
+    .then((data, fetchedHints) => fetchedHints = data.results.map(elem => elem.segments[0].value.toLowerCase()))
     .then((data, setData) => setData = [...new Set(data)])
     .then((data, filteredData) => filteredData = data.filter(elem => elem.match(regex)))
     .then((data, clearedData) => clearedData = data.filter(elem => elem !== query))

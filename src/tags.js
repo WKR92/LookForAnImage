@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 
-
-
 export default function Tags(props){
     const [tags, setTags] = useState([])
     useEffect(() => {
@@ -16,6 +14,7 @@ export default function Tags(props){
         setTags([...new Set(getTagsFromImages)])
         
     }, [props])
+
     useEffect(() => {
         if(tags.length > 1){
             const rA = document.getElementById("rightArrowHolder")
@@ -26,6 +25,7 @@ export default function Tags(props){
             }
         }
     })
+
     function scrollRigth(){
 
         const lA = document.getElementById("leftArrowHolder")
@@ -48,6 +48,7 @@ export default function Tags(props){
         firstToGo();
         secondToGo();
       }
+
       function scrollLeft(){
   
         const rA = document.getElementById("rightArrowHolder")
@@ -71,6 +72,7 @@ export default function Tags(props){
         secondToGO();
   
       }
+      
     return(
         <div className="mainTagsDiv" id="mainTagsDiv">
           <div className="leftArrowHolder" id="leftArrowHolder">

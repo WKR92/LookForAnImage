@@ -9,6 +9,7 @@ import ImagesBlock from './imagesBlock'
 import OpenedImage from './openedImage'
 
 const APIAccessKey = "6PMB_sssC924TiZ3jPaY4Iwo4KZ0E6d6xZ0dgSbK4_g";
+
 const SecondPage = (props) => {
 
   let scroll = 1
@@ -49,7 +50,7 @@ const SecondPage = (props) => {
     + "&page=" + page
     )
     .then(response => response.json())
-    .then((data, fetchedUrls) => fetchedUrls = data.results.map(elem => 
+    .then((data, fetchedImgInfo) => fetchedImgInfo = data.results.map(elem => 
     [elem.urls.small, 
     elem.urls.regular, 
     elem.user.name,
