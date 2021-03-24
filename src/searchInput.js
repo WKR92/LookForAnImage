@@ -80,20 +80,15 @@ const SearchInput = (props) => {
     props.setMainInput(event.target.value.toLowerCase())
   }
 
-  function x(){
-    console.log(props.hints)
-  }
-    
-
   return(
   <form onSubmit={handleSubmit} className="searchInput__form">
-      <button onClick={x} title="Search for pictures" type="button" id="searchInput__form__lupeBtn"
+      <button onClick={handleSubmit} title="Search for pictures" type="button" id="searchInput__form__lupeBtn"
         className="searchInput__form__lupeBtn" >
           <img className="lupeIcon" alt="lupe_icon" src={lupe} />
       </button>
       <input list="autocomplite" autoComplete="off" required onChange={handleChange} id="searchInput__form__input" 
         className="searchInput__form__input" type="search" placeholder="Search for high-resolution photos" />
-      <datalist onClick={handleSubmit} id="autocomplite">
+      <datalist id="autocomplite">
         {props.hints.map(elem => {
           return <option key={elem} value={elem}>{elem}</option>
         }) }

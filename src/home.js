@@ -27,7 +27,7 @@ function FirstPage(props) {
           handleSubmitForConcretePage={goFurtherWithInpput} 
           didMountForConcretePage={changePage} 
         />
-        <p style={{color: "red"}}>{props.hints[0] === "No hints for choosen query" ? " -- " + props.hints[0] : null}</p>
+        <p id="NoHintsP" style={{color: "red"}}>{props.hints[0] === "No hints for choosen query" ? " -- " + props.hints[0] : null}</p>
         <p className="contentDiv__trending">There are available only 50 API requests per hour so this can expire quickly.</p>
       </div>
     </div>

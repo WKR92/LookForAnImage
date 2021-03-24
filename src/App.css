@@ -692,4 +692,7 @@ html {
     height: 25px;
     width: 25px;
   }
+  #NoHintsP {
+    display: none;
+  }
 }

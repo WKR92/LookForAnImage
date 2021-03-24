@@ -132,7 +132,7 @@ const SecondPage = (props) => {
     window.removeEventListener('scroll', showArrowOnScroll);
     window.removeEventListener('scroll', scrollUpdate);
     
-    history.push("/LookForAnImage");
+    history.push("/");
   }
 
   function handleTag(event){
@@ -160,9 +160,9 @@ const SecondPage = (props) => {
       />
 
       <div className="alertDiv">
-        <p className="alertP">{props.hints[0] === "No hints for choosen query" ? " -- " + props.hints[0] : null}</p>
+        <p id="NoHintsP" className="alertP">{props.hints[0] === "No hints for choosen query" ? " -- " + props.hints[0] : null}</p>
       </div>
-      <h1 className="secondPage__h1">{query.charAt(0).toUpperCase() + query.slice(1)}</h1>
+      <h1 id="secondPage__h1">{query.charAt(0).toUpperCase() + query.slice(1)}</h1>
 
       {images.length > 0
       ? <Tags key={updatedKeyTags} handleTag={handleTag} images={images} mainInput={props.mainInput} />
